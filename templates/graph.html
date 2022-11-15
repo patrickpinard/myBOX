@@ -1,0 +1,528 @@
+
+{% extends "layout.html" %}
+{% set active_page = "graph" %}
+{% block body %}
+
+
+  <!-- App Capsule -->
+  <div id="appCapsule" class="full-height">
+    <div class="section mt-1 mb-1">
+      
+      <div class="section-title">Graphiques</div>
+
+        <!-- ========== Graph 1 He ==========-->
+        <div class="section">
+          <div class="section-title"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart1"></div>
+                </div>
+            </div>
+        </div>  
+
+        <!-- ========== Graph 2 Te ========== -->
+        <div class="section">
+          <div class="section-title"></div>
+            <div class="card">
+              <div class="card-body">
+                  <div id="chart2"></div>
+              </div>
+            </div>
+        </div> 
+
+        <!-- ========== Graph 3  Ti ========== -->
+        <div class="section">  
+          <div class="section-title"></div>
+            <div class="card">
+              <div class="card-body">
+                  <div id="chart3"></div>
+              </div>
+            </div>
+        </div>
+
+        <!-- ========== Graph 4  Chauffage ========== -->
+        <div class="section">
+          <div class="section-title"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== Graph 5 Prise 240V  ========== -->
+        <div class="section">
+          <div class="section-title"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart5"></div>
+                </div>
+            </div>
+        </div>
+    
+
+        <!-- ========== Graph 6  Lumière ========== -->
+        <div class="section">
+          <div class="section-title"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart6"></div>
+                </div>
+            </div>
+        </div>  
+
+    </div>
+  </div>  
+    <!-- * App Capsule -->
+
+
+
+  <script>
+
+    // Chart 1 avec Apex Chart
+    // Humidité extérieure
+    console.log("data = ", {{data1}})
+
+    var options1 = {
+      series: [
+          {
+            name: "He",
+            data: {{data1}}
+          },
+        ],
+          chart: {
+          height: 500,
+          type: 'line',
+          dropShadow: {
+            enabled: false,
+            color: '#000',
+            top: 18,
+            left: 7,
+            blur: 10,
+            opacity: 0.2
+          },
+          toolbar: {
+            show: true
+          }
+        },
+        colors: ['#77B6EA', '#545454'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+            width: 4,
+        },
+        title: {
+          text: 'Humidité extérieure',
+          align: 'left'
+        },
+        grid: {
+          borderColor: '#e7e7e7',
+          
+        },
+        markers: {
+          size: 0
+        },
+        xaxis: {
+          type: 'datetime',  
+          
+          title: {
+            text: 'Date et Heure'
+          },
+        },
+        yaxis: {
+          title: {
+            text: '%HR'
+          },
+          min: 0,
+          max: 100
+        },
+        legend: {
+          position: 'bottom',
+          horizontalAlign: 'center',
+          floating: true,
+          offsetY: 35,
+          offsetX: -5
+        }
+        };
+
+        var chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
+        chart1.render();
+
+  </script>
+
+   <script>
+
+    // Chart 2 avec Apex Chart
+    // Température extérieure
+   
+    console.log("data = ", {{data2}})
+    var options2 = {
+      series: [
+          {
+            name: "Te",
+            data: {{data2}}
+          },
+        ],
+          chart: {
+          height: 500,
+          type: 'line',
+          dropShadow: {
+            enabled: false,
+            color: '#000',
+            top: 18,
+            left: 7,
+            blur: 10,
+            opacity: 0.2
+          },
+          toolbar: {
+            show: true
+          }
+        },
+        colors: ['#77B6EA', '#545454'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+            width: 4,
+        },
+        title: {
+          text: 'Température extérieure',
+          align: 'left'
+        },
+        grid: {
+          borderColor: '#e7e7e7',
+          
+        },
+        markers: {
+          size: 0
+        },
+        xaxis: {
+          type: 'datetime',  
+          
+          title: {
+            text: 'Date et Heure'
+          },
+        },
+        yaxis: {
+          title: {
+            text: '°C'
+          },
+          min: -20,
+          max: +50
+        },
+        legend: {
+          position: 'bottom',
+          horizontalAlign: 'center',
+          floating: true,
+          offsetY: 35,
+          offsetX: -5
+        }
+        };
+
+        var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+        chart2.render();
+
+  </script>
+
+<script>
+
+  // Chart 3 avec Apex Chart
+  // Température intérieure
+
+  console.log("data = ", {{data3}})
+  var options3 = {
+    series: [
+        {
+          name: "Ti",
+          data: {{data3}}
+        },
+      ],
+        chart: {
+        height: 500,
+        type: 'line',
+        dropShadow: {
+          enabled: false,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2
+        },
+        toolbar: {
+          show: true
+        }
+      },
+      colors: ['#77B6EA', '#545454'],
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+          width: 4,
+      },
+      title: {
+        text: 'Température intérieure',
+        align: 'left'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        
+      },
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        type: 'datetime',  
+        
+        title: {
+          text: 'Date et Heure'
+        },
+      },
+      yaxis: {
+        title: {
+          text: '°C'
+        },
+        min: -20,
+        max: 50
+      },
+      legend: {
+        position: 'bottom',
+        horizontalAlign: 'center',
+        floating: true,
+        offsetY: 35,
+        offsetX: -5
+      }
+      };
+
+      var chart3 = new ApexCharts(document.querySelector("#chart3"), options3);
+      chart3.render();
+
+</script>
+   
+<script>
+
+  // Chart 4 avec Apex Chart
+  // Relai 1
+
+  console.log("data = ", {{data4}})
+  var options4 = {
+    series: [
+        {
+          name: "Chauffage",
+          data: {{data4}}
+        },
+      ],
+        chart: {
+        height: 500,
+        type: 'line',
+        dropShadow: {
+          enabled: false,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2
+        },
+        toolbar: {
+          show: true
+        }
+      },
+      colors: ['#77B6EA', '#545454'],
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+          width: 4,
+          curve: 'stepline'
+      },
+      title: {
+        text: 'Chauffage',
+        align: 'left'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        
+      },
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        type: 'datetime',  
+        
+        title: {
+          text: 'Date et Heure'
+        },
+      },
+      yaxis: {
+        title: {
+          text: 'ON/OFF'
+        },
+        min: 0,
+        max: 1.2
+      },
+      legend: {
+        position: 'bottom',
+        horizontalAlign: 'center',
+        floating: true,
+        offsetY: 35,
+        offsetX: -5
+      }
+      };
+
+      var chart4 = new ApexCharts(document.querySelector("#chart4"), options4);
+      chart4.render();
+
+</script>
+
+<script>
+
+  // Chart 5 avec Apex Chart
+  // Relai 2
+
+  console.log("data = ", {{data5}})
+  var options5 = {
+    series: [
+        {
+          name: "Prise 240V",
+          data: {{data5}}
+        },
+      ],
+        chart: {
+        height: 500,
+        type: 'line',
+        dropShadow: {
+          enabled: false,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2
+        },
+        toolbar: {
+          show: true
+        }
+      },
+      colors: ['#77B6EA', '#545454'],
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+          width: 4,
+          curve: 'stepline'
+      },
+      title: {
+        text: 'Prise 240V',
+        align: 'left'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        
+      },
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        type: 'datetime',  
+        
+        title: {
+          text: 'Date et Heure'
+        },
+      },
+      yaxis: {
+        title: {
+          text: 'ON/OFF'
+        },
+        min: 0,
+        max: 1.2
+      },
+      legend: {
+        position: 'bottom',
+        horizontalAlign: 'center',
+        floating: true,
+        offsetY: 35,
+        offsetX: -5
+      }
+      };
+
+      var chart5 = new ApexCharts(document.querySelector("#chart5"), options5);
+      chart5.render();
+
+</script>
+
+<script>
+
+  // Chart 6 avec Apex Chart
+  // Relai 3
+
+  console.log("data = ", {{data6}})
+  var options6 = {
+    series: [
+        {
+          name: "Lumière",
+          data: {{data6}}
+        },
+      ],
+        chart: {
+        height: 500,
+        type: 'line',
+        dropShadow: {
+          enabled: false,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2
+        },
+        toolbar: {
+          show: true
+        }
+      },
+      colors: ['#77B6EA', '#545454'],
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+          width: 4,
+          curve: 'stepline'
+      },
+      title: {
+        text: 'Lumière',
+        align: 'left'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        
+      },
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        type: 'datetime',  
+        
+        title: {
+          text: 'Date et Heure'
+        },
+      },
+      yaxis: {
+        title: {
+          text: 'ON/OFF'
+        },
+        min: 0,
+        max: 1.2
+      },
+      legend: {
+        position: 'bottom',
+        horizontalAlign: 'center',
+        floating: true,
+        offsetY: 35,
+        offsetX: -5
+      }
+      };
+
+      var chart6 = new ApexCharts(document.querySelector("#chart6"), options6);
+      chart6.render();
+
+</script>
+
+{% endblock %}
+

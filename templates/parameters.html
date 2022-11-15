@@ -1,0 +1,132 @@
+
+{% extends "layout.html" %}
+{% set active_page = "parameters" %}
+{% block body %}
+
+<script>
+window.onload= function () {
+    getParameters();
+}; 
+</script>
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="full-height"> 
+         
+        <form method="POST" role="form" action="/saveparameters" class="center-block">  
+            <div class="section mt-1 mb-1">
+                <div class="section-title">Températures pour thermostat chauffage [°C]</div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                   <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="Tmax">Maximale</label>
+                                            <input type="number" class="form-control" id="TMAX" name="TMAX" min="0" max="50" >
+                                            
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                    <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="Tmin">Minimale</label>
+                                            <input type="number" class="form-control" id="TMIN" name="TMIN" min="0" max="50" >
+                                            
+                                        </div>
+                                    </div>        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section mt-2">
+                <div class="section-title">Fréquence des mesures et affichages [sec.]</div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                    <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="INTERVAL_DISPLAY">Affichage sur écrans </label>
+                                            <input type="number" class="form-control" id="INTERVAL_DISPLAY" name="INTERVAL_DISPLAY" min="0" max="100" >
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                    <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="INTERVAL_LOOP">Interval entre mesures</label>
+                                            <input type="number" class="form-control" id="INTERVAL_LOOP" name="INTERVAL_LOOP" min="0" max="3600" >
+                                            
+                                        </div>
+                                    </div>       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="section mt-2">
+                <div class="section-title">Planifier activation prise 240V [hh:mm]</div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                    <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="INTERVAL_DISPLAY">Démarrage </label>
+                                            <input type="time" class="form-control" id="SCHEDULER_START" name="SCHEDULER_START" >
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                    <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="SCHEDULER_STOP">Arrêt</label>
+                                            <input type="time" class="form-control" id="SCHEDULER_STOP" name="SCHEDULER_STOP" >
+                                        </div>
+                                    </div>       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section mt-2">
+                <div>
+                    <button type="submit" class="btn btn-primary me-1" onclick="Inform()">Sauvegarder</button>
+                    <label id="info" style="color:rgb(255, 0, 0)" style="font-size:15px; margin-left: 10px;"> </label>
+                </div> 
+            </div>
+
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+
+        // fonction appelée lors de la sauvegarde des paramètres de configuration
+
+        function Inform() {
+            console.log("sauvegarde des paramètres de configurations effectuée");
+            document.getElementById('info').innerHTML = "sauvegarde sur disque en cours ...";
+            setTimeout(() => {  document.getElementById('info').innerHTML = ""; }, 3000);
+        }
+    </script>
+
+    
+{% endblock %}
+
