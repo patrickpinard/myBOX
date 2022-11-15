@@ -1,6 +1,7 @@
 # MyBOX 
 
-MyBox est un boitier constitué d'un Raspberry Pi 4 avec 3 relais 240V et 8 ports d'acquisitions analogiques sur lesquels sont connectés des sondes de températures, d'humidité de l'air notamment.
+MyBox est un boitier constitué d'un Raspberry Pi 4 avec 3 relais 240V et 8 ports d'acquisitions analogiques sur lesquels sont connectés des sondes de températures et d'humidité de l'air.
+
 Il permet d'activer différentes prises 240V :
     - lumière
     - chauffage avec themrostat
@@ -68,6 +69,7 @@ https://www.distrelec.ch/fr/adc-canaux-12-bits-pour-raspberry-pi-seeed-studio-10
 
 ## Montage du tableau
 
+![](/images/schema.png) 
 ![](/images/mybox.jpg)
 
 
