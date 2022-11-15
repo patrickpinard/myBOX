@@ -9,7 +9,7 @@ Il permet d'activer différentes prises 240V :
 ![](/images/mybox.png) 
 ![](/images/logo.png)
 
-## APP myBOX PWA
+## l'APP myBOX 
 
 ![](/images/capteurs.png) 
 
@@ -73,7 +73,7 @@ https://www.distrelec.ch/fr/adc-canaux-12-bits-pour-raspberry-pi-seeed-studio-10
 
 ## API's
 
-Les API vont permettre de commander la serre via des requêtes http.
+Les API vont permettre de commander le boitier via des requêtes http depuis une APP PWA.
 
 Exemple :
 
