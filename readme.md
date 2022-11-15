@@ -35,13 +35,15 @@ https://www.distrelec.ch/fr/boitier-plastique-polycarbonate-couvercle-charniere-
 
 ![](/images/boitier.png)
 
-## Sonde température : 
+## Sonde température de l'air (intérieure): 
 
 https://www.pi-shop.ch/waterproof-ds18b20-digital-temperature-sensor-extras
 
+Sonde DS18B20
+
 ![](/images/ds18b20.jpg)
 
-## Sonde humidité d'air : 
+## Sonde température et humidité d'air (extérieure): 
 
 Sondes AM2315
 
