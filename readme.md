@@ -43,9 +43,9 @@ https://www.pi-shop.ch/waterproof-ds18b20-digital-temperature-sensor-extras
 
 ## Sonde humidité d'air : 
 
-...Sondes AM2315...
+Sondes AM2315
 
-![](/images/am2315.png)
+![](/images/AM2315.png)
 
 
 ## Alimentations 5 & 12  V : 
