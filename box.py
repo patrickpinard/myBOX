@@ -1,8 +1,8 @@
 # Auteur  : Patrick Pinard 
-# Date    : 15.11.2022
+# Date    : 17.11.2022
 # Objet   : Box Atelier
 # Source  : box.py
-# Version : 3.2
+# Version : 3.3
 
 #   Clavier MAC :      
 #  {} = "alt/option" + "(" ou ")"
@@ -21,26 +21,25 @@ import myRelayLib
 import myAM2315Lib
 from myLOGLib import LogEvent, eventlog
 import myJSONLib
-import myOLED128Lib
 from myExtractLib import json_extract
-from time import gmtime, strftime, sleep, strptime
+from time import gmtime, sleep
 import calendar
-from pprint import pprint
 import datetime
 from threading import Thread
 from myJSONLib import writeJSONtoFile, readJSONfromFile
 from flask import Flask, render_template, request, jsonify
-
+import pickle
 
 ####### Paramètres généreaux de l'APP ###############
 
 APPNAME             = "Box"
-APPDATE             = "15/11/22"
-APPVERSION          = "V3.2"
+APPDATE             = "17/11/22"
+APPVERSION          = "V3.3"
 APPAUTHOR           = "Patrick Pinard"
 APPPATH             = '/home/pi/box/'
 DATAFILENAME        = APPPATH + "data.json"
 CONFIG_FILENAME     = APPPATH + "config.json"
+ALLDATAFILE         = APPPATH + 'alldata.dta'
 
 ####### Création de l'APPLICATION FLASK ###############
 
@@ -73,7 +72,7 @@ USERNAME         = 'ADMIN'
 LOCATION         = "BOX dans Atelier"
 ID               = 0
 DEBUG            = False
-
+MAX_ALL_DATA_SIZE= 500              # Nombre de mesure gardée en mémoire
 
 #### Info pour LOG file #######
 
@@ -84,8 +83,6 @@ time = now.strftime("%H:%M:%S")
 dateandtime = date + " à " + time 
 LASTREBOOT = dateandtime
 LogEvent("Redémarrage le " + str(LASTREBOOT ))
-
-if DEBUG : LogEvent("DEBUG - Valeurs initiales (Data) : " + str(DATA))
 
 ##### Tuple des valeurs #######
 
@@ -98,8 +95,8 @@ DATA = {        'ID'                : ID,
                 'APPAUTHOR'         : APPAUTHOR,
                 'LASTREBOOT'        : LASTREBOOT,
                 "TIMESTAMP"         : time_stamp,
-                "DATE"              : strftime("%d.%m.%Y"),
-                "TIME"              : strftime("%H:%M:%S"),
+                "DATE"              : now.strftime("%d.%m.%Y"),
+                "TIME"              : now.strftime("%H:%M:%S"),
                 "LOCATION"          : LOCATION,
                 "Ti"                : Ti,
                 "Te"                : Te,
@@ -301,8 +298,8 @@ def SaveState():
                 'APPAUTHOR'         : APPAUTHOR,
                 'LASTREBOOT'        : LASTREBOOT,
                 "TIMESTAMP"         : time_stamp,
-                "DATE"              : strftime("%d.%m.%Y"),
-                "TIME"              : strftime("%H:%M:%S"),
+                "DATE"              : now.strftime("%d.%m.%Y"),
+                "TIME"              : now.strftime("%H:%M:%S"),
                 "LOCATION"          : LOCATION,
                 "Ti"                : DATA["Ti"],
                 "Te"                : DATA["Te"],
@@ -323,9 +320,15 @@ def SaveState():
                 'SCHEDULER_STOP'    : DATA["SCHEDULER_STOP"]   
             }
     
-    if DEBUG : LogEvent("Etat : " + str(state))
     
     ALL_DATA.append(state)
+
+    l = len(ALL_DATA)
+    if l > MAX_ALL_DATA_SIZE-1: 
+        ALL_DATA.pop(0)
+
+    LogEvent("Nombre de mesures enregistrées : " + str(l))
+
     myJSONLib.writeJSONtoFile(DATAFILENAME, ALL_DATA)
 
 ##### THREADS #######
@@ -362,9 +365,11 @@ class Loop (Thread):
             waiting = True
             i=0                   
             try :  
-                ReadValues()
+                ReadSensorsValues()
+                SetThermostat() 
                 DisplayValues()
                 SaveState()
+                SaveData()
                 while waiting:
                     i= i+1
                     if i<int(DATA["INTERVAL_LOOP"]):
@@ -461,34 +466,79 @@ class Scheduler (Thread):
 
 ##### LECTURE DES CAPTEURS ET ETATS #######
 
-def ReadValues():
+def ReadSensorsValues():
     '''
-    lecture de l'ensemble des capteurs et états des rélais à un instant t
+    lecture de l'ensemble des capteurs 
     '''
-    global  DATA, ID
+    global  DATA
     
     DATA["Ti"]          = round(DS18B20.read(),1)
     DATA["Te"]          = round(AM2315.read_temperature(),1)
-    DATA["He"]          = round(AM2315.read_humidity(),1)                   
+    DATA["He"]          = round(AM2315.read_humidity(),1)  
+    DATA["DATE"]        = now.strftime("%d.%m.%Y")     
+    DATA["TIME"]        = now.strftime("%H:%M:%S")
+    return 
+
+
+def SetThermostat():
+    '''
+    Thermostat
+    '''
+    global  DATA, ID
+            
     
     if DATA["THERMOSTAT"] :
         if float(DATA["Ti"]) <= float(DATA["TMIN"]) : 
             RELAY.on(DATA["HEATER_RELAY"]) 
+            if not DATA["HEATER"]:
+                ID = ID + 1
+                separator = "--- EVENT ID : " + str(ID) + " ----"
+                LogEvent(separator) 
+                LogEvent("Chauffage activé via thermostat. Température < " + str(DATA["TMIN"]) + "°C")
             DATA["HEATER"] = True 
-            ID = ID + 1
-            separator = "--- EVENT ID : " + str(ID) + " ----"
-            LogEvent(separator) 
-            LogEvent("Chauffage activé via thermostat. Température < " + str(DATA["TMIN"]) + "°C")
                             
         if float(DATA["Ti"]) >= float(DATA["TMAX"]) : 
             RELAY.off(DATA["HEATER_RELAY"]) 
+            if DATA["HEATER"]:
+                ID = ID + 1
+                separator = "--- EVENT ID : " + str(ID) + " ----"
+                LogEvent(separator) 
+                LogEvent("Chauffage désactivé via thermostat. Température >=" + str(DATA["TMAX"]) + "°C")
             DATA["HEATER"] = False
-            ID = ID + 1
-            separator = "--- EVENT ID : " + str(ID) + " ----"
-            LogEvent(separator) 
-            LogEvent("Chauffage désactivé via thermostat. Température >=" + str(DATA["TMAX"]) + "°C")
-    
     return 
+
+def SaveData():
+
+    # Sauvegarde des données enregistrées sur disque
+
+    try: 
+        with open(ALLDATAFILE , 'wb') as file:
+            pickle.dump(ALL_DATA, file)
+    except IOError as e:
+        LogEvent("Erreur: {0}".format(e))
+
+    LogEvent("Sauvegarde des mesures enregistrées terminée.")
+    
+def LoadData():
+
+    # Chargement des données enregistrées sur disque 
+
+    global ALL_DATA
+
+    if os.path.isfile(ALLDATAFILE ):
+        LogEvent("Fichier de sauvegarde des mesures : " + ALLDATAFILE + " disponible." )
+    
+        try: 
+            with open(ALLDATAFILE , 'rb') as file:
+                ALL_DATA = pickle.load(file)
+        except OSError as err:
+            LogEvent("Erreur: {0}".format(err))
+       
+        LogEvent("Chargement des mesures sauvegardées terminé." )
+    else:
+        LogEvent("Fichier de sauvegarde des mesures inexistant." )
+    return   
+
 
 ####################   API   ############################
 
@@ -815,7 +865,7 @@ def saveparameters():
         DATA["INTERVAL_DISPLAY"]= int(request.form.get("INTERVAL_DISPLAY"))  
         DATA["SCHEDULER_START"] = (request.form.get("SCHEDULER_START"))
         DATA["SCHEDULER_STOP"]  = (request.form.get("SCHEDULER_STOP"))       
-        LogEvent("Changements de paramètres de configuration")
+        LogEvent("Changements des paramètres de configuration")
         LogEvent("Fréquence de lecture capteurs   :  " + str(DATA["INTERVAL_LOOP"]) + " sec.") 
         LogEvent("Fréquence d'affichage écran     :  " + str(DATA["INTERVAL_DISPLAY"]) + " sec.")
         LogEvent("Température minimum             :  " + str(DATA["TMIN"]) + " °C")
@@ -828,8 +878,8 @@ def saveparameters():
 
         if DEBUG : 
             LogEvent("DEBUG - Sauvegarde des paramètres de configurations : " + str(DATA))
-
-    return render_template('parameters.html', **DATA) 
+    return ('', 204)
+    #return render_template('parameters.html', **DATA) 
 
 @app.route("/getparameters", methods=['GET'])
 def getparameters():
@@ -853,7 +903,7 @@ def parameters():
 if __name__ == '__main__': 
      
     app.secret_key = os.urandom(12)
-    
+    LoadData()
     LoadParametersFromFile()
     
     thread1 = Display(1, "DISPLAY")
