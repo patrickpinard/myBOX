@@ -47,32 +47,32 @@ app = Flask(__name__)
 
 ##### Variables et valeurs par défaut#######
 
-DHT_SENSOR_PIN   = 4                # PIN D4 sur board GrovePi
-INTERVAL_LOOP    = 300              # interval de mesure automatique en sec.
-INTERVAL_DISPLAY = 5                # interval d'affichage sur écran OLED et LCD en sec
-TMIN             = 6                # température minimale pour activation chauffage
-TMAX             = 9                # température maximale pour coupure chauffage
-HEATER_RELAY     = 1                # numéro du relai pour chauffage commandé par Thermostat
-PLUG_RELAY       = 2                # relai pour PLUG commandé par Planificateur 
-LIGHT_RELAY      = 3                # relai pour lumière
-THERMOSTAT       = False            # thermostat pour chauffage
-SCHEDULER        = False            # planificateur pour prise 240V 
-SCHEDULER_START  = "00:00"          # heure de démarrage de l'activation de la prise PLUG_RELAY
-SCHEDULER_STOP   = "00:00"          # heure d'arrêt de la prise PLUG_RELAY
-HEATER           = False            # chauffage 
-LIGHT            = False            # lumière
-PLUG             = False            # prise 240V
-Te               = 0                # température extérieure    
-Ti               = 0                # température intérieure
-He               = 0                # humidité extérieure
-DATA             = {}               # dernières données mesurées et paramètres enregistrés
-ALL_DATA         = []               # ensemble des mesures et paramètres au format json
-LASTREBOOT       = ""               # Date et heure du dernier reboot
-USERNAME         = 'ADMIN'
-LOCATION         = "BOX dans Atelier"
-ID               = 0
-DEBUG            = False
-MAX_ALL_DATA_SIZE= 500              # Nombre de mesure gardée en mémoire
+DHT_SENSOR_PIN       = 4                # PIN D4 sur board GrovePi
+INTERVAL_LOOP        = 300              # interval de mesure automatique en sec.
+INTERVAL_DISPLAY     = 5                # interval d'affichage sur écran OLED et LCD en sec
+TMIN                 = 6                # température minimale pour activation chauffage
+TMAX                 = 9                # température maximale pour coupure chauffage
+HEATER_RELAY         = 1                # numéro du relai pour chauffage commandé par Thermostat
+PLUG_RELAY           = 2                # relai pour PLUG commandé par Planificateur 
+LIGHT_RELAY          = 3                # relai pour lumière
+THERMOSTAT           = False            # thermostat pour chauffage
+SCHEDULER            = False            # planificateur pour prise 240V 
+SCHEDULER_START      = "00:00"          # heure de démarrage de l'activation de la prise PLUG_RELAY
+SCHEDULER_STOP       = "00:00"          # heure d'arrêt de la prise PLUG_RELAY
+HEATER               = False            # chauffage 
+LIGHT                = False            # lumière
+PLUG                 = False            # prise 240V
+Te                   = 0                # température extérieure    
+Ti                   = 0                # température intérieure
+He                   = 0                # humidité extérieure
+DATA                 = {}               # dernières données mesurées et paramètres enregistrés
+ALL_DATA             = []               # ensemble des mesures et paramètres au format json
+LASTREBOOT           = ""               # Date et heure du dernier reboot
+USERNAME             = 'ADMIN'
+LOCATION             = "Atelier"
+ID                   = 0    
+DEBUG                = False             # Mode DEBUG pour affichage détails dans eventlog
+MAX_ALL_DATA_SIZE    = 1000              # Nombre de mesure gardée en mémoire
 
 #### Info pour LOG file #######
 
@@ -87,6 +87,8 @@ LogEvent("Redémarrage le " + str(LASTREBOOT ))
 ##### Tuple des valeurs #######
 
 time_stamp = calendar.timegm(gmtime())*1000
+time_now   = datetime.datetime.now()
+
 DATA = {        'ID'                : ID,
                 'APPNAME'           : APPNAME, 
                 'USERNAME'          : USERNAME,
@@ -95,8 +97,8 @@ DATA = {        'ID'                : ID,
                 'APPAUTHOR'         : APPAUTHOR,
                 'LASTREBOOT'        : LASTREBOOT,
                 "TIMESTAMP"         : time_stamp,
-                "DATE"              : now.strftime("%d.%m.%Y"),
-                "TIME"              : now.strftime("%H:%M:%S"),
+                "DATE"              : time_now.strftime("%d.%m.%Y"),
+                "TIME"              : time_now.strftime("%H:%M:%S"),
                 "LOCATION"          : LOCATION,
                 "Ti"                : Ti,
                 "Te"                : Te,
@@ -114,7 +116,8 @@ DATA = {        'ID'                : ID,
                 'PLUG_RELAY'        : PLUG_RELAY,
                 'SCHEDULER'         : SCHEDULER,
                 'SCHEDULER_START'   : SCHEDULER_START,
-                'SCHEDULER_STOP'    : SCHEDULER_STOP   
+                'SCHEDULER_STOP'    : SCHEDULER_STOP,
+                'DEBUG'             : DEBUG   
             }
 
 
@@ -144,22 +147,25 @@ def manifest():
 def DisplayValues():
     
     global ID
-
-    ID = ID + 1
-    separator = "--- EVENT ID : " + str(ID) + " ----"
-    LogEvent(separator) 
-   
-    LogEvent("Fréquence de lecture capteurs   :  " + str(DATA["INTERVAL_LOOP"]) + " sec.") 
-    LogEvent("Fréquence d'affichage écran     :  " + str(DATA["INTERVAL_DISPLAY"]) + " sec.")
-    LogEvent("Température minimum             :  " + str(DATA["TMIN"]) + " °C")
-    LogEvent("Température maximum             :  " + str(DATA["TMAX"]) + " °C")
-    LogEvent("Chauffage                       :  " + str(DATA["HEATER"]))
-    LogEvent("Thermostat                      :  " + str(DATA["THERMOSTAT"]))
-    LogEvent("Lumière                         :  " + str(DATA["LIGHT"]))
-    LogEvent("Prise 240V                      :  " + str(DATA["PLUG"]))
-    LogEvent("Scheduler                       :  " + str(DATA["SCHEDULER"]))
-    LogEvent("Scheduler Start                 :  " + str(DATA["SCHEDULER_START"]))
-    LogEvent("Scheduler Stop                  :  " + str(DATA["SCHEDULER_STOP"]))
+    if DATA["DEBUG"] : 
+        ID = ID + 1
+        separator = "--- EVENT ID : " + str(ID) + " ----"
+        LogEvent(separator) 
+    
+        LogEvent("Fréquence de lecture capteurs   :  " + str(DATA["INTERVAL_LOOP"]) + " sec.") 
+        LogEvent("Fréquence d'affichage écran     :  " + str(DATA["INTERVAL_DISPLAY"]) + " sec.")
+        LogEvent("Chauffage   (ON/OFF)            :  " + str(DATA["HEATER"]))
+        LogEvent("Thermostat  (ON/OFF)            :  " + str(DATA["THERMOSTAT"]))
+        LogEvent("  Température minimum           :  " + str(DATA["TMIN"]) + " °C")
+        LogEvent("  Température maximum           :  " + str(DATA["TMAX"]) + " °C")
+        LogEvent("Lumière     (ON/OFF)            :  " + str(DATA["LIGHT"]))
+        LogEvent("Prise 240V  (ON/OFF)            :  " + str(DATA["PLUG"]))
+        LogEvent("Scheduler   (ON/OFF)            :  " + str(DATA["SCHEDULER"]))
+        LogEvent("  Scheduler start[hh:mm]        :  " + str(DATA["SCHEDULER_START"]))
+        LogEvent("  Scheduler stop [hh:mm]        :  " + str(DATA["SCHEDULER_STOP"]))
+        LogEvent("Température extérieure          :  " + str(DATA["Te"]) + " °C")
+        LogEvent("Humidité extérieure             :  " + str(DATA["He"]) + " °C")
+        LogEvent("Température intérieure          :  " + str(DATA["Ti"]) + " °C")
        
 
 ####  AFFICHAGES SUR ECRANS LCD ####
@@ -236,14 +242,15 @@ def SaveParametersToFile():
                          'LIGHT'            : DATA["LIGHT"],
                          'LIGHT_RELAY'      : DATA["LIGHT_RELAY"],
                          'PLUG'             : DATA["PLUG"],
-                         'PLUG_RELAY'       : DATA["PLUG_RELAY"]
+                         'PLUG_RELAY'       : DATA["PLUG_RELAY"],
+                         'DEBUG'            : DATA["DEBUG"] 
                         }
 
-    if DEBUG : LogEvent("DEBUG - Config parameters saved : " + str(config_parameters))
+    if DATA["DEBUG"] : LogEvent("DEBUG - Config parameters saved : " + str(config_parameters))
 
     if writeJSONtoFile(CONFIG_FILENAME, config_parameters):
         
-        if DEBUG : LogEvent("Sauvegarde des paramètres de configuration sur fichier : " + CONFIG_FILENAME)
+        if DATA["DEBUG"] : LogEvent("Sauvegarde des paramètres de configuration sur fichier : " + CONFIG_FILENAME)
         return
     else: 
         LogEvent("Erreur de sauvegarde des paramètres de configuration sur fichier : " + CONFIG_FILENAME)
@@ -276,8 +283,9 @@ def LoadParametersFromFile():
         DATA["LIGHT_RELAY"]      = int(config_parameters["LIGHT_RELAY"])
         DATA["PLUG"]             = config_parameters["PLUG"]     
         DATA["PLUG_RELAY"]       = int(config_parameters["PLUG_RELAY"])
+        DATA["DEBUG"]            = bool(config_parameters['DEBUG'])
        
-        if DEBUG :  LogEvent("DEBUG - Config Parameters loaded : " + str(config_parameters))  
+        if DATA["DEBUG"] :  LogEvent("DEBUG - Config Parameters loaded : " + str(config_parameters))  
         
     else: 
         LogEvent("Fichier inexistant, chargement des paramètres de configuration par défaut.")
@@ -298,8 +306,8 @@ def SaveState():
                 'APPAUTHOR'         : APPAUTHOR,
                 'LASTREBOOT'        : LASTREBOOT,
                 "TIMESTAMP"         : time_stamp,
-                "DATE"              : now.strftime("%d.%m.%Y"),
-                "TIME"              : now.strftime("%H:%M:%S"),
+                "DATE"              : DATA["DATE"], 
+                "TIME"              : DATA["TIME"], 
                 "LOCATION"          : LOCATION,
                 "Ti"                : DATA["Ti"],
                 "Te"                : DATA["Te"],
@@ -317,7 +325,8 @@ def SaveState():
                 'PLUG_RELAY'        : DATA["PLUG_RELAY"],
                 'SCHEDULER'         : DATA["SCHEDULER"],
                 'SCHEDULER_START'   : DATA["SCHEDULER_START"],
-                'SCHEDULER_STOP'    : DATA["SCHEDULER_STOP"]   
+                'SCHEDULER_STOP'    : DATA["SCHEDULER_STOP"],
+                'DEBUG'             : DATA["DEBUG"]     
             }
     
     
@@ -327,7 +336,10 @@ def SaveState():
     if l > MAX_ALL_DATA_SIZE-1: 
         ALL_DATA.pop(0)
 
-    LogEvent("Nombre de mesures enregistrées : " + str(l))
+    
+    if DATA["DEBUG"] : 
+        LogEvent("DEBUG : Etat sauvegardé : " + str(state))
+        LogEvent("Nombre de mesures enregistrées : " + str(l))
 
     myJSONLib.writeJSONtoFile(DATAFILENAME, ALL_DATA)
 
@@ -421,7 +433,7 @@ class Scheduler (Thread):
                 HH_STOP  = int(DATA["SCHEDULER_STOP"][0:2])
                 MM_STOP  = int(DATA["SCHEDULER_STOP"][3:5])
                 
-                if DEBUG : 
+                if DATA["DEBUG"] : 
                     LogEvent("DEBUG : HH_START : " + str(HH_START))
                     LogEvent("DEBUG : MM_START : " + str(MM_START))
                     LogEvent("DEBUG : HH_STOP  : " + str(HH_STOP))
@@ -432,7 +444,7 @@ class Scheduler (Thread):
                 time_start = now.replace(hour=HH_START, minute=MM_START, second=0, microsecond=0) 
                 time_stop  = now.replace(hour=HH_STOP, minute=MM_STOP, second=0, microsecond=0 ) 
                 
-                if DEBUG : 
+                if DATA["DEBUG"] : 
                     LogEvent("DEBUG : time_now   : " + str(time_now))
                     LogEvent("DEBUG : time_start : " + str(time_start))
                     LogEvent("DEBUG : time_stop  : " + str(time_stop))
@@ -470,13 +482,24 @@ def ReadSensorsValues():
     '''
     lecture de l'ensemble des capteurs 
     '''
-    global  DATA
+    global  DATA, ID
     
     DATA["Ti"]          = round(DS18B20.read(),1)
     DATA["Te"]          = round(AM2315.read_temperature(),1)
     DATA["He"]          = round(AM2315.read_humidity(),1)  
-    DATA["DATE"]        = now.strftime("%d.%m.%Y")     
-    DATA["TIME"]        = now.strftime("%H:%M:%S")
+
+    time_now   = datetime.datetime.now()
+    DATA["DATE"]        = time_now.strftime("%d.%m.%Y")     
+    DATA["TIME"]        = time_now.strftime("%H:%M:%S")
+    
+    if True : #DATA["DEBUG"] : 
+        ID = ID + 1
+        separator = "--- EVENT ID : " + str(ID) + " ----"
+        LogEvent(separator) 
+        #LogEvent("Mesure du " + str(DATA["DATE"]) + " à " + str(DATA["TIME"]))
+        LogEvent("Température extérieure    :  " + str(DATA["Te"]) + " °C")
+        LogEvent("Température intérieure    :  " + str(DATA["Ti"]) + " °C")
+        LogEvent("Humidité extérieure       :  " + str(DATA["He"]) + " %HR")
     return 
 
 
@@ -517,7 +540,7 @@ def SaveData():
     except IOError as e:
         LogEvent("Erreur: {0}".format(e))
 
-    LogEvent("Sauvegarde des mesures enregistrées terminée.")
+    if DATA["DEBUG"] : LogEvent("Sauvegarde des mesures enregistrées terminée.")
     
 def LoadData():
 
@@ -742,6 +765,38 @@ def light():
         return jsonify(resp)
 
 
+@app.route("/debug_mode", methods=['POST','GET'])
+def debug_mode():
+    '''
+    POST : mode debug
+    Requête API sous forme : 
+    http://box.ppdlab.ch/debug?state=true
+   ''' 
+    
+    global DATA, ID
+
+    if request.method == "POST":
+        state = (request.form.get('state'))
+        ID = ID + 1
+        separator = "--- EVENT ID : " + str(ID) + " ----"
+        LogEvent(separator) 
+        
+        if state=="true":
+            DATA['DEBUG'] = True
+            LogEvent("Mode DEBUG activé.")
+        elif state=="false":
+            DATA['DEBUG'] = False
+            LogEvent("Mode DEBUG désactivé.")
+        
+        SaveState()
+        return ('', 204)
+
+    if request.method == "GET":
+        resp = {'Mode DEBUG': DATA['DEBUG']}
+        LogEvent(resp)
+        return jsonify(resp)
+
+
 @app.route("/heater", methods=['POST','GET'])
 def heater():
     '''
@@ -865,21 +920,20 @@ def saveparameters():
         DATA["INTERVAL_DISPLAY"]= int(request.form.get("INTERVAL_DISPLAY"))  
         DATA["SCHEDULER_START"] = (request.form.get("SCHEDULER_START"))
         DATA["SCHEDULER_STOP"]  = (request.form.get("SCHEDULER_STOP"))       
-        LogEvent("Changements des paramètres de configuration")
-        LogEvent("Fréquence de lecture capteurs   :  " + str(DATA["INTERVAL_LOOP"]) + " sec.") 
-        LogEvent("Fréquence d'affichage écran     :  " + str(DATA["INTERVAL_DISPLAY"]) + " sec.")
-        LogEvent("Température minimum             :  " + str(DATA["TMIN"]) + " °C")
-        LogEvent("Température maximum             :  " + str(DATA["TMAX"]) + " °C")
-        LogEvent("Scheduler Start                 :  " + str(DATA["SCHEDULER_START"]))
-        LogEvent("Scheduler Stop                  :  " + str(DATA["SCHEDULER_STOP"]))
+        
+        LogEvent("Changements des paramètres de configuration : ")
+        LogEvent("Fréquence de lecture capteurs :  " + str(DATA["INTERVAL_LOOP"]) + " sec.") 
+        LogEvent("Fréquence d'affichage écran   :  " + str(DATA["INTERVAL_DISPLAY"]) + " sec.")
+        LogEvent("Température minimum           :  " + str(DATA["TMIN"]) + " °C")
+        LogEvent("Température maximum           :  " + str(DATA["TMAX"]) + " °C")
+        LogEvent("Scheduler Start               :  " + str(DATA["SCHEDULER_START"]))
+        LogEvent("Scheduler Stop                :  " + str(DATA["SCHEDULER_STOP"]))
+        LogEvent("Debug mode                    :  " + str(DATA["DEBUG"]))
         
         SaveState()
         SaveParametersToFile()
 
-        if DEBUG : 
-            LogEvent("DEBUG - Sauvegarde des paramètres de configurations : " + str(DATA))
-    return ('', 204)
-    #return render_template('parameters.html', **DATA) 
+    return render_template('parameters.html', **DATA) 
 
 @app.route("/getparameters", methods=['GET'])
 def getparameters():

@@ -31,7 +31,7 @@
      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
    
   
-</head>ß
+</head>
 
 
 <body>
@@ -272,6 +272,9 @@
             document.getElementById('PLUG').value = obj.PLUG;
             document.getElementById('HEATER').value = obj.HEATER;
             document.getElementById('SCHEDULER').value = obj.SCHEDULER;
+            document.getElementById('DEBUG').value = obj.DEBUG;
+            document.getElementById('TIME').value = obj.TIME;
+            document.getElementById('DATE').value = obj.DATE;
             }
           });
       }
@@ -333,6 +336,23 @@
   function scheduler(state) {
     $.ajax({
       url: "/scheduler",
+      type: "post",
+      data: {state:state},
+      success: function(response) {
+      }
+    });
+
+  }
+  </script>
+
+
+  <script>
+
+    // fonction appelée lors d'un changement d'état du switch pour le planificateur
+
+  function debug_mode(state) {
+    $.ajax({
+      url: "/debug_mode",
       type: "post",
       data: {state:state},
       success: function(response) {

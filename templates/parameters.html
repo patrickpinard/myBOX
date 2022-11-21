@@ -12,6 +12,69 @@ window.onload= function () {
     <!-- App Capsule -->
     <div id="appCapsule" class="full-height"> 
          
+
+        <div class="section mt-2">
+            <div class="section-title">Admin de l'APP</div>
+        
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                                <div class="form-group basic">
+                                    <div class="form-check">
+        
+                                        {% if  DEBUG == true %}  
+                                        
+                                            <input class="form-check-input" type="checkbox" value="" checked id="DEBUG" onchange="debug_mode(this.checked)">
+                                            <label class="form-check-label" for="DEBUG">
+                                              Debug mode
+                                            </label>
+                                        
+                                        {% else %} 
+
+                                            <input class="form-check-input" type="checkbox" value="" unchecked id="DEBUG" onchange="debug_mode(this.checked)">
+                                            <label class="form-check-label" for="DEBUG">
+                                            Debug mode
+                                            </label>
+
+                                        {% endif %} 
+                                        
+                                    </div>
+                                </div>       
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                                <div class="form-group basic">
+                                    <div class="form-check">
+        
+                                        {% if  DISPLAY == true %}  
+                                        
+                                            <input class="form-check-input" type="checkbox" value="" checked id="DISPALAY" onchange="DISPLAY_mode(this.checked)">
+                                            <label class="form-check-label" for="DISPLAY">
+                                              n/a
+                                            </label>
+                                        
+                                        {% else %} 
+
+                                            <input class="form-check-input" type="checkbox" value="" unchecked id="DISPLAY" onchange="DISPLAY_mode(this.checked)">
+                                            <label class="form-check-label" for="DISPLAY">
+                                            n/a
+                                            </label>
+                                        
+                                            {% endif %} 
+                                        
+                                    </div>
+                                </div>       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
         <form method="POST" role="form" action="/saveparameters" class="center-block">  
             <div class="section mt-1 mb-1">
                 <div class="section-title">Températures pour thermostat chauffage [°C]</div>
@@ -105,6 +168,8 @@ window.onload= function () {
                     </div>
                 </div>
             </div>
+
+           
             <div class="section mt-2">
                 <div>
                     <button type="submit" class="btn btn-primary me-1" onclick="Inform()">Sauvegarder</button>
