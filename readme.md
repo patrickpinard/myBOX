@@ -18,7 +18,7 @@ Il permet d'activer différentes prises 240V :
 
 ![](/images/events.png) 
 
-![](/images/events.png) 
+![](/images/parametres.png) 
 
 
 ## Matériel
