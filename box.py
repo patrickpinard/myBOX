@@ -639,7 +639,24 @@ def graph():
        
     return render_template('graph.html', data1=data1, data2=data2,data3=data3, data4=data4, data5=data5,data6=data6, **DATA)
     
+@app.route("/testgraph", methods=['GET'])
+def testgraph():
+    '''
+    Affichage de l'ensemble des graphiques 
+    '''
     
+    graphdata = { 
+                'Ts' : json_extract(ALL_DATA,"Ts"),
+                'He' : json_extract(ALL_DATA,"He"),
+                'Te' : json_extract(ALL_DATA,"Te"), 
+                'Ti' : json_extract(ALL_DATA,"Ti"),
+                'R1' : json_extract(ALL_DATA,"HEATER"),
+                'R2' : json_extract(ALL_DATA,"PLUG"),
+                'R3' : json_extract(ALL_DATA,"LIGHT")
+                }
+    
+    return render_template('graph.html', **graphdata)
+        
 
 @app.route("/shutdown", methods=['POST'])
 def shutdown():
