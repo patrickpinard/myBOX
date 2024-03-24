@@ -2,153 +2,237 @@
 {% set active_page = "actionneurs" %}
 {% block body %}
 
-       
-    <!-- App Capsule -->
-    <div id="appCapsule" class="full-height">
-        
-        <!--  actionneurs -->
-        
-        <div class="section mt-1 mb-1">
-            <div class="section-title">Chauffage & Thermostat</div>
-                <div class="card">
 
-                    <ul class="listview image-listview transparent flush">
-                        
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="thermometer-outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <strong>Thermostat (paramètres) </strong>
-                                    {% if  THERMOSTAT == true %}  
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="thermostat_auto_mode" checked onchange="thermostat_auto_mode(this.checked)"/>
-                                            <label class="form-check-label" for="thermostat_auto_mode"></label>
-                                        </div>
-                                    {% else %} 
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="thermostat_auto_mode" unchecked onchange="thermostat_auto_mode(this.checked)"/>
-                                            <label class="form-check-label" for="thermostat_auto_mode"></label>
-                                        </div>
-                                    {% endif %} 
-                                </div>
-                            </div>
-                        </li>
+<!-- App Capsule -->
+<div id="appCapsule" class="full-height">
 
-                        <li>
-                            <div class="item">
-                                <div class="icon-box bg-danger">
-                                    <ion-icon name="flame-outline"></ion-icon>
-                                </div>
-                                <div class="in">
-                                    <div>
-                                        <strong>Chauffage </strong>
-                                    </div>
-                                   
-                                        {% if HEATER == true %}   
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="Heater" checked onchange="heater(this.checked)"/>
-                                                <label class="form-check-label" for="Heater"></label>
-                                            </div>
-                                        {% else %} 
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="Heater" unchecked onchange="heater(this.checked)"/>
-                                                <label class="form-check-label" for="Heater"></label>
-                                            </div>
-                                        {% endif %} 
-                                   
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+    <!--  Actionneurs -->
 
-                </div>
-        </div>
-     
-        
-        <div class="section mt-1 mb-1">
-            <div class="section-title">Prise & Planifier</div>
-            <div class="card">
+    <!-- CHAUFFAGE & THERMOSTAT -->
 
-                <ul class="listview image-listview transparent flush">
-                    
-                    <li>
-                        <div class="item">
-                            <div class="icon-box bg-warning">
-                                <ion-icon name="alarm-outline"></ion-icon>
-                            </div>
-                            <div class="in">
-                                <strong>Planificateur (paramètres) </strong>
-                                <div class="form-check form-switch">
-                                    {% if SCHEDULER == true %} 
-                                    <input class="form-check-input" type="checkbox" id="scheduler" checked onchange="scheduler(this.checked)"/>
-                                    <label class="form-check-label" for="scheduler"></label>
-                                    {% else %}
-                                    <input class="form-check-input" type="checkbox" id="scheduler" unchecked onchange="scheduler(this.checked)"/>
-                                    <label class="form-check-label" for="scheduler"></label>
-                                    {% endif %} 
-                                </div>
-                            </div>
+    <div class="section mt-1 mb-1">
+        <div class="section-title">Chauffage & Thermostat</div>
+        <div class="card">
+
+            <ul class="listview image-listview transparent flush">
+
+                <li>
+                    <div class="item">
+                        <div class="icon-box bg-danger">
+                            <ion-icon name="thermometer-outline"></ion-icon>
                         </div>
-                    </li>
-                    
-                    <li>
-                        <div class="item">
-                            <div class="icon-box bg-warning">
-                                <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
+                        <div class="in">
+                            <strong>Thermostat (à configurer dans paramètres) </strong>
+                            {% if THERMOSTAT == true %}
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="thermostat_auto_mode" checked
+                                    onchange="thermostat_auto_mode(this.checked)" />
+                                <label class="form-check-label" for="thermostat_auto_mode"></label>
                             </div>
-                            <div class="in">
-                                <strong>Prise 240V  </strong>
-                                <div class="form-check form-switch">
-                                    {% if PLUG == true %} 
-                                    <input class="form-check-input" type="checkbox" id="plug" checked onchange="plug(this.checked)"/>
-                                    <label class="form-check-label" for="plug"></label>
-                                    {% else %}
-                                    <input class="form-check-input" type="checkbox" id="plug" unchecked onchange="plug(this.checked)"/>
-                                    <label class="form-check-label" for="plug"></label>
-                                    {% endif %} 
-                                </div>
+                            {% else %}
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="thermostat_auto_mode" unchecked
+                                    onchange="thermostat_auto_mode(this.checked)" />
+                                <label class="form-check-label" for="thermostat_auto_mode"></label>
                             </div>
+                            {% endif %}
                         </div>
-                    </li>
+                    </div>
+                </li>
 
-                </ul>
-            </div>
-        </div>
-
-        <div class="section mt-1 mb-1">
-            <div class="section-title">Lumière</div>
-            <div class="card">
-
-                <ul class="listview image-listview transparent flush">
-                    
-                    <li>
-                        <div class="item">
-                            <div class="icon-box bg-success">
-                                <ion-icon name="bulb-outline"></ion-icon>
-                            </div>
-                            <div class="in">
-                                <strong>Lampe LED </strong>
-                                <div class="form-check form-switch">
-                                    {% if LIGHT == true %} 
-                                    <input class="form-check-input" type="checkbox" id="light" checked onchange="light(this.checked)"/>
-                                    <label class="form-check-label" for="light"></label>
-                                    {% else %}
-                                    <input class="form-check-input" type="checkbox" id="light" unchecked onchange="light(this.checked)"/>
-                                    <label class="form-check-label" for="light"></label>
-                                    {% endif %} 
-                                </div>
-                            </div>
+                <li>
+                    <div class="item">
+                        <div class="icon-box bg-danger">
+                            <ion-icon name="flame-outline"></ion-icon>
                         </div>
-                    </li>
+                        <div class="in">
+                            <div>
+                                <strong>Chauffage </strong>
+                            </div>
 
-                </ul>
-            </div>
+                            {% if HEATER == true %}
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="Heater" checked
+                                    onchange="heater(this.checked)" />
+                                <label class="form-check-label" for="Heater"></label>
+                            </div>
+                            {% else %}
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="Heater" unchecked
+                                    onchange="heater(this.checked)" />
+                                <label class="form-check-label" for="Heater"></label>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
         </div>
-        <!-- * actionneurs -->
     </div>
-    <!-- * App Capsule -->    
 
-    
+
+    <!-- PRISE & PLANIFICATEUR -->
+
+    <div class="section mt-1 mb-1">
+        <div class="section-title">Prise & Planificateur</div>
+        <div class="card">
+
+            <ul class="listview image-listview transparent flush">
+
+                <li>
+                    <div class="item">
+                        <div class="icon-box bg-warning">
+                            <ion-icon name="alarm-outline"></ion-icon>
+                        </div>
+                        <div class="in">
+                            <strong>Planificateur (à configurer dans paramètres) </strong>
+                            <div class="form-check form-switch">
+                                {% if SCHEDULER == true %}
+                                <input class="form-check-input" type="checkbox" id="scheduler" checked
+                                    onchange="scheduler(this.checked)" />
+                                <label class="form-check-label" for="scheduler"></label>
+                                {% else %}
+                                <input class="form-check-input" type="checkbox" id="scheduler" unchecked
+                                    onchange="scheduler(this.checked)" />
+                                <label class="form-check-label" for="scheduler"></label>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="item">
+                        <div class="icon-box bg-warning">
+                            <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
+                        </div>
+                        <div class="in">
+                            <strong>Prise 240V </strong>
+                            <div class="form-check form-switch">
+                                {% if PLUG == true %}
+                                <input class="form-check-input" type="checkbox" id="plug" checked
+                                    onchange="plug(this.checked)" />
+                                <label class="form-check-label" for="plug"></label>
+                                {% else %}
+                                <input class="form-check-input" type="checkbox" id="plug" unchecked
+                                    onchange="plug(this.checked)" />
+                                <label class="form-check-label" for="plug"></label>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- LUMIERE -->
+
+    <div class="section mt-1 mb-1">
+        <div class="section-title">Lumière</div>
+        <div class="card">
+
+            <ul class="listview image-listview transparent flush">
+
+                <li>
+                    <div class="item">
+                        <div class="icon-box bg-success">
+                            <ion-icon name="bulb-outline"></ion-icon>
+                        </div>
+                        <div class="in">
+                            <strong>Lampe LED </strong>
+                            <div class="form-check form-switch">
+                                {% if LIGHT == true %}
+                                <input class="form-check-input" type="checkbox" id="light" checked
+                                    onchange="light(this.checked)" />
+                                <label class="form-check-label" for="light"></label>
+                                {% else %}
+                                <input class="form-check-input" type="checkbox" id="light" unchecked
+                                    onchange="light(this.checked)" />
+                                <label class="form-check-label" for="light"></label>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- * VENTILATEUR DU RASPBERRY PI 4 -->
+
+    <div class="section mt-1 mb-1">
+        <div class="section-title">Ventilation Raspberry PI</div>
+        <div class="card">
+
+            <ul class="listview image-listview transparent flush">
+
+                <li>
+                    <div class="item">
+                        <div class="icon-box bg-success">
+                            <ion-icon name="medical-outline"></ion-icon>
+                        </div>
+                        <div class="in">
+                            <strong>Ventilateur Raspberry PI </strong>
+                            <div class="form-check form-switch">
+                                {% if FAN == true %}
+                                <input class="form-check-input" type="checkbox" id="fan" checked
+                                    onchange="fan(this.checked)" />
+                                <label class="form-check-label" for="fan"></label>
+                                {% else %}
+                                <input class="form-check-input" type="checkbox" id="fan" unchecked
+                                    onchange="fan(this.checked)" />
+                                <label class="form-check-label" for="fan"></label>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- * CAMERA STREAMING -->
+
+    <div class="section mt-1 mb-1">
+        <div class="section-title">Camera</div>
+        <div class="card">
+
+            <ul class="listview image-listview transparent flush">
+
+                <li>
+                    <div class="item">
+                        <div class="icon-box bg-primary">
+                            <ion-icon name="videocam-outline"></ion-icon>
+                        </div>
+                        <div class="in">
+                            <strong>Pi Video Camera </strong>
+                            <div class="form-check form-switch">
+                                {% if CAMERA == true %}
+                                <input class="form-check-input" type="checkbox" id="camera" checked
+                                    onchange="camera(this.checked)" />
+                                <label class="form-check-label" for="camera"></label>
+                                {% else %}
+                                <input class="form-check-input" type="checkbox" id="camera" unchecked
+                                    onchange="camera(this.checked)" />
+                                <label class="form-check-label" for="camera"></label>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- * actionneurs -->
+</div>
+<!-- * App Capsule -->
+
+
 {% endblock %}
