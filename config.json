@@ -1,16 +1,19 @@
 {
+    "CAMERA": false,
+    "DEBUG": false,
+    "FAN": false,
     "HEATER": false,
     "HEATER_RELAY": 1,
-    "INTERVAL_DISPLAY": "5",
-    "INTERVAL_LOOP": "25",
+    "INTERVAL_DISPLAY": 5,
+    "INTERVAL_LOOP": 300,
     "LIGHT": false,
     "LIGHT_RELAY": 3,
     "PLUG": false,
     "PLUG_RELAY": 2,
-    "SCHEDULER": null,
-    "SCHEDULER_START": "06:00",
-    "SCHEDULER_STOP": "23:59",
-    "THERMOSTAT": true,
-    "TMAX": "10.0",
-    "TMIN": "6.0"
+    "SCHEDULER": false,
+    "SCHEDULER_START": "00:00",
+    "SCHEDULER_STOP": "00:00",
+    "THERMOSTAT": false,
+    "TMAX": 9,
+    "TMIN": 6
 }

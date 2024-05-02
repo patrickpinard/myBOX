@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% set active_page = "dashboard" %}
+{% block body %}
+
+
+
+<!-- App Capsule -->
+<div id="appCapsule" class="full-height">
+
+    <div class="section mt-1 mb-1">
+        <div class="section-title">Caméra</div>
+
+        <div class="card">
+            
+            {% if CAMERA == true %}
+                <img id="video" src="/video_feed" class="img-fluid rounded" />
+            {% else %}   
+                caméra inactivée
+            {% endif %}
+
+        </div>
+    </div>
+
+
+</div>
+
+</div>
+<!-- * App Capsule -->
+
+
+
+{% endblock %}

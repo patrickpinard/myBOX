@@ -1,0 +1,72 @@
+2024-05-01 13:26:29,708 - INFO - --- { start logging : /home/pi/mybox/mybox.log } ---
+2024-05-01 13:26:30,020 - INFO - Redémarrage de MyBox V6.1
+2024-05-01 13:26:31,023 - INFO - Création de l'objet DS18B20
+2024-05-01 13:26:31,048 - INFO - Fichier de sauvegarde des mesures : /home/pi/mybox/alldata.dta disponible.
+2024-05-01 13:26:31,055 - INFO - Chargement des mesures sauvegardées terminé.
+2024-05-01 13:26:31,056 - INFO - Chargement des paramètres de configuration depuis fichier : /home/pi/mybox/config.json
+2024-05-01 13:26:31,056 - INFO - Thread DISPLAY started
+2024-05-01 13:26:31,057 - INFO - Thread LOOP    started
+2024-05-01 13:26:31,061 - INFO - Thread SCHEDULER started
+2024-05-01 13:26:31,171 - INFO -  * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+2024-05-01 13:26:32,658 - INFO - 192.168.1.119 - - [01/May/2024 13:26:32] "[37mGET /parameters HTTP/1.1[0m" 200 -
+2024-05-01 13:26:32,874 - INFO - 192.168.1.119 - - [01/May/2024 13:26:32] "[37mGET /getparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:26:38,131 - INFO - 192.168.1.119 - - [01/May/2024 13:26:38] "[37mGET /graph HTTP/1.1[0m" 200 -
+2024-05-01 13:26:39,427 - INFO - 192.168.1.119 - - [01/May/2024 13:26:39] "[37mGET /parameters HTTP/1.1[0m" 200 -
+2024-05-01 13:26:39,584 - INFO - 192.168.1.119 - - [01/May/2024 13:26:39] "[37mGET /getparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:26:44,892 - INFO - Changements des paramètres de configuration : 
+2024-05-01 13:26:44,892 - INFO - Fréquence de lecture capteurs :  300 sec.
+2024-05-01 13:26:44,898 - INFO - Fréquence d'affichage écran   :  5 sec.
+2024-05-01 13:26:44,903 - INFO - Température minimum           :  6 °C
+2024-05-01 13:26:44,908 - INFO - Température maximum           :  9 °C
+2024-05-01 13:26:44,913 - INFO - Scheduler Start               :  00:00
+2024-05-01 13:26:44,919 - INFO - Scheduler Stop                :  00:00
+2024-05-01 13:26:44,924 - INFO - Debug mode                    :  False
+2024-05-01 13:26:45,185 - INFO - 192.168.1.119 - - [01/May/2024 13:26:45] "[37mPOST /saveparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:26:45,467 - INFO - 192.168.1.119 - - [01/May/2024 13:26:45] "[37mGET /getparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:28:58,934 - INFO - Ventilation du Raspberry PI enclenchée.
+2024-05-01 13:28:59,080 - INFO - Changements des paramètres de configuration : 
+2024-05-01 13:28:59,095 - INFO - Fréquence de lecture capteurs :  300 sec.
+2024-05-01 13:28:59,101 - INFO - Fréquence d'affichage écran   :  5 sec.
+2024-05-01 13:28:59,111 - INFO - Température minimum           :  6 °C
+2024-05-01 13:28:59,127 - INFO - Température maximum           :  9 °C
+2024-05-01 13:28:59,140 - INFO - Scheduler Start               :  00:00
+2024-05-01 13:28:59,154 - INFO - Scheduler Stop                :  00:00
+2024-05-01 13:28:59,160 - INFO - Debug mode                    :  False
+2024-05-01 13:28:59,273 - INFO - 192.168.1.119 - - [01/May/2024 13:28:59] "[37mPOST /fan HTTP/1.1[0m" 200 -
+2024-05-01 13:28:59,444 - INFO - 192.168.1.119 - - [01/May/2024 13:28:59] "[37mPOST /saveparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:28:59,617 - INFO - 192.168.1.119 - - [01/May/2024 13:28:59] "[37mGET /getparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:29:01,198 - INFO - 192.168.1.119 - - [01/May/2024 13:29:01] "[37mGET /eventslog HTTP/1.1[0m" 200 -
+2024-05-01 13:29:11,222 - INFO - 192.168.1.119 - - [01/May/2024 13:29:11] "[37mGET /parameters HTTP/1.1[0m" 200 -
+2024-05-01 13:29:11,358 - INFO - 192.168.1.119 - - [01/May/2024 13:29:11] "[37mGET /getparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:29:12,503 - INFO - Ventilation du Raspberry PI déclenchée.
+2024-05-01 13:29:12,709 - INFO - 192.168.1.119 - - [01/May/2024 13:29:12] "[37mPOST /fan HTTP/1.1[0m" 200 -
+2024-05-01 13:29:13,884 - INFO - Changements des paramètres de configuration : 
+2024-05-01 13:29:13,890 - INFO - Fréquence de lecture capteurs :  300 sec.
+2024-05-01 13:29:13,896 - INFO - Fréquence d'affichage écran   :  5 sec.
+2024-05-01 13:29:13,901 - INFO - Température minimum           :  6 °C
+2024-05-01 13:29:13,906 - INFO - Température maximum           :  9 °C
+2024-05-01 13:29:13,912 - INFO - Scheduler Start               :  00:00
+2024-05-01 13:29:13,917 - INFO - Scheduler Stop                :  00:00
+2024-05-01 13:29:13,922 - INFO - Debug mode                    :  False
+2024-05-01 13:29:14,160 - INFO - 192.168.1.119 - - [01/May/2024 13:29:14] "[37mPOST /saveparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:29:14,771 - INFO - 192.168.1.119 - - [01/May/2024 13:29:14] "[37mGET /getparameters HTTP/1.1[0m" 200 -
+2024-05-01 13:29:15,145 - INFO - 192.168.1.119 - - [01/May/2024 13:29:15] "[37mGET /eventslog HTTP/1.1[0m" 200 -
+2024-05-01 21:00:34,120 - INFO - 192.168.1.119 - - [01/May/2024 21:00:34] "[37mGET /parameters HTTP/1.1[0m" 200 -
+2024-05-01 21:00:34,500 - INFO - 192.168.1.119 - - [01/May/2024 21:00:34] "[37mGET /getparameters HTTP/1.1[0m" 200 -
+2024-05-01 21:00:39,955 - INFO - {'Lampe': False}
+2024-05-01 21:00:39,961 - INFO - 192.168.1.119 - - [01/May/2024 21:00:39] "[37mGET /light HTTP/1.1[0m" 200 -
+2024-05-01 21:00:40,045 - INFO - 192.168.1.119 - - [01/May/2024 21:00:40] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-05-01 21:01:14,572 - INFO - 192.168.1.119 - - [01/May/2024 21:01:14] "[37mGET / HTTP/1.1[0m" 200 -
+2024-05-01 21:01:52,088 - INFO - {'Lampe': False}
+2024-05-01 21:01:52,094 - INFO - 192.168.1.119 - - [01/May/2024 21:01:52] "[37mGET /light HTTP/1.1[0m" 200 -
+2024-05-02 10:00:30,891 - INFO - 192.168.1.119 - - [02/May/2024 10:00:30] "[37mGET / HTTP/1.1[0m" 200 -
+2024-05-02 10:00:31,108 - INFO - 192.168.1.119 - - [02/May/2024 10:00:31] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-05-02 10:00:31,111 - INFO - 192.168.1.119 - - [02/May/2024 10:00:31] "[36mGET /static/js/base.js HTTP/1.1[0m" 304 -
+2024-05-02 10:00:31,126 - INFO - 192.168.1.119 - - [02/May/2024 10:00:31] "[36mGET /static/img/profile.png HTTP/1.1[0m" 304 -
+2024-05-02 10:00:31,143 - INFO - 192.168.1.119 - - [02/May/2024 10:00:31] "[36mGET /static/img/favicon-32x32.png HTTP/1.1[0m" 304 -
+2024-05-02 10:00:31,188 - INFO - 192.168.1.119 - - [02/May/2024 10:00:31] "[36mGET /static/css/src/bootstrap/bootstrap.min.css HTTP/1.1[0m" 304 -
+2024-05-02 10:00:31,253 - INFO - 192.168.1.119 - - [02/May/2024 10:00:31] "[36mGET /static/css/src/splide/splide.min.css HTTP/1.1[0m" 304 -
+2024-05-02 10:00:31,270 - INFO - 192.168.1.119 - - [02/May/2024 10:00:31] "[36mGET /static/img/favicon-96x96.png HTTP/1.1[0m" 304 -
+2024-05-02 10:17:46,942 - INFO - 192.168.1.119 - - [02/May/2024 10:17:46] "[37mGET / HTTP/1.1[0m" 200 -
+2024-05-02 11:38:06,988 - INFO - 192.168.1.119 - - [02/May/2024 11:38:06] "[37mGET / HTTP/1.1[0m" 200 -
+2024-05-02 11:38:09,251 - INFO - 192.168.1.119 - - [02/May/2024 11:38:09] "[37mGET /capteurs HTTP/1.1[0m" 200 -

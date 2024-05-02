@@ -1,0 +1,213 @@
+
+{% extends "layout.html" %}
+{% set active_page = "parameters" %}
+{% block body %}
+
+<script>
+window.onload= function () {
+    getParameters();
+}; 
+</script>
+
+<!-- App Capsule -->
+<div id="appCapsule" class="full-height"> 
+    <form method="POST" role="form" action="/saveparameters" class="center-block">  
+        <div class="section mt-2">
+            <div class="section-title">Paramètres</div>
+        
+            <div class="card">
+                <div class="card-body pt-0">
+
+                    <ul class="nav nav-tabs lined" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#debug" role="tab">
+                                Debug
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#prise" role="tab">
+                                Prise
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#thermostat" role="tab">
+                                Thermostat
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#affichage" role="tab">
+                                Affichage
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-2">
+                        <div class="tab-pane fade show active" id="debug" role="tabpanel">
+                            Paramètres de debugging de l'application.
+                            <div class="row">
+                                <div class="col">
+                                                <div class="form-group basic">
+                                                    <div class="form-check">
+                        
+                                                        {% if  DEBUG == true %}  
+                                                        
+                                                            <input class="form-check-input" type="checkbox" value="" checked id="DEBUG" onchange="debug_mode(this.checked)">
+                                                            <label class="form-check-label" for="DEBUG">
+                                                              Debug mode
+                                                            </label>
+                                                        
+                                                        {% else %} 
+                
+                                                            <input class="form-check-input" type="checkbox" value="" unchecked id="DEBUG" onchange="debug_mode(this.checked)">
+                                                            <label class="form-check-label" for="DEBUG">
+                                                            Debug mode
+                                                            </label>
+                
+                                                        {% endif %} 
+                                                        
+                                                    </div>
+                                                </div>       
+                                </div>
+                                <div class="col">
+                                   
+                                                    <div class="form-check">
+                        
+                                                        {% if  DISPLAY == true %}  
+                                                        
+                                                            <input class="form-check-input" type="checkbox" value="" checked id="DISPALAY" onchange="DISPLAY_mode(this.checked)">
+                                                            <label class="form-check-label" for="DISPLAY">
+                                                              n/a
+                                                            </label>
+                                                        
+                                                        {% else %} 
+                
+                                                            <input class="form-check-input" type="checkbox" value="" unchecked id="DISPLAY" onchange="DISPLAY_mode(this.checked)">
+                                                            <label class="form-check-label" for="DISPLAY">
+                                                            n/a
+                                                            </label>
+                                                        
+                                                            {% endif %} 
+                                                        
+                                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="thermostat" role="tabpanel">
+                            Valeurs min. et max. du thermostat.
+                            <div class="section mt-1 mb-1">
+                                <div class="row">
+                                    <div class="col">
+                                       
+                                                   <div class="form-group basic">
+                                                        <div class="input-wrapper">
+                                                            <label class="label" for="Tmax">Maximale</label>
+                                                            <input type="number" class="form-control" id="TMAX" name="TMAX" min="0" max="50" >
+                                                            
+                                                        </div>
+                                                    </div>
+                                           
+                                    </div>
+                                    <div class="col">
+                                        
+                                                    <div class="form-group basic">
+                                                        <div class="input-wrapper">
+                                                            <label class="label" for="Tmin">Minimale</label>
+                                                            <input type="number" class="form-control" id="TMIN" name="TMIN" min="0" max="50" >
+                                                            
+                                                        </div>
+                                                    </div>        
+                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="affichage" role="tabpanel">
+                            Fréquence des mesures et affichages LCD [sec.]
+                            <div class="section mt-2">
+                                <div class="row">
+                                    <div class="col">
+                                       
+                                                    <div class="form-group basic">
+                                                        <div class="input-wrapper">
+                                                            <label class="label" for="INTERVAL_DISPLAY">Affichage sur écrans </label>
+                                                            <input type="number" class="form-control" id="INTERVAL_DISPLAY" name="INTERVAL_DISPLAY" min="0" max="100" >
+                                                        </div>
+                                                    </div>
+                                       
+                                    </div>
+                                    <div class="col">
+                                        
+                                                    <div class="form-group basic">
+                                                        <div class="input-wrapper">
+                                                            <label class="label" for="INTERVAL_LOOP">Interval entre mesures</label>
+                                                            <input type="number" class="form-control" id="INTERVAL_LOOP" name="INTERVAL_LOOP" min="0" max="3600" >
+                                                            
+                                                        </div>
+                                                    </div>       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="prise" role="tabpanel">
+                            Plage horaire de commande de la prise 
+                            <div class="section mt-2">
+                                <div class="row">
+                                        <div class="col">
+                                                        <div class="form-group basic">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="INTERVAL_DISPLAY">Démarrage [hh:mm]</label>
+                                                                <input type="time" class="form-control" id="SCHEDULER_START" name="SCHEDULER_START" >
+                                                            </div>
+                                                        </div>
+                                        </div>
+                                        <div class="col">
+                                            
+                                                        <div class="form-group basic">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="SCHEDULER_STOP">Arrêt [hh:mm]</label>
+                                                                <input type="time" class="form-control" id="SCHEDULER_STOP" name="SCHEDULER_STOP" >
+                                                            </div>
+                                                        </div>       
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        
+        </div>
+        
+            
+        <div class="section mt-2">
+            <div>
+                    <button type="submit" class="btn btn-primary me-1" onclick="Inform()">Sauvegarder</button>
+                    <label id="info" style="color:rgb(255, 0, 0)" style="font-size:15px; margin-left: 10px;"> </label>
+            </div> 
+        </div>
+
+    </form>
+    
+</div>
+
+
+    <script type="text/javascript">
+
+        // fonction appelée lors de la sauvegarde des paramètres de configuration
+
+        function Inform() {
+            console.log("sauvegarde des paramètres de configurations effectuée");
+            document.getElementById('info').innerHTML = "sauvegarde sur disque en cours ...";
+            setTimeout(() => {  document.getElementById('info').innerHTML = ""; }, 1000);
+        }
+    </script>
+
+    
+{% endblock %}
+

@@ -1,7 +1,7 @@
 {
     "name": "BOX Atelier",
     "short_name": "BOX",
-    "start_url": "index.html",
+    "start_url": "",
     "display": "standalone",
     "scope" : "/",
     "background_color": "#000000",
