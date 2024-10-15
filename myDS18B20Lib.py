@@ -92,11 +92,18 @@ class DS18B20(object):
                 try:
                     line = content.split("\n")[1]
                     temperature = line.split(" ")[9]
+                    temperature = float(temperature[2:]) / 1000
+                    t.append(round(temperature,2))
+                    c += 1
                 except : 
-                    raise LogEvent("ERREUR : lecture du contenu fichier de températures : " + (content)) 
-                temperature = float(temperature[2:]) / 1000
-                t.append(round(temperature,2))
-                c += 1
+                    LogEvent("ERREUR : lecture du contenu fichier de températures. ") 
+                    temperature = 0.0
+                    t.append(round(temperature,2))
+                    c += 1
+
+                #temperature = float(temperature[2:]) / 1000
+                #t.append(round(temperature,2))
+                #c += 1
         else :
             LogEvent("ERREUR : Aucune sonde détectée. Vérifier les branchements.")
         self.values = t

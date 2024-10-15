@@ -2,7 +2,7 @@
 # Date    : 25.3.2024
 # Objet   : MyBox Atelier
 # Source  : mybox.py
-# Version : 7 (camera)
+# Version : 8 (camera + whatsmyip)
 
 #   Clavier MAC :
 #  {} = "alt/option" + "(" ou ")"
@@ -20,14 +20,14 @@ import pickle
 import sys
 from threading import Thread
 from time import gmtime, sleep
-import cv2
 
+import cv2
 import myAM2315Lib
 import myDS18B20Lib
 import myJSONLib
 import myLCDLib
 import myRelayLib
-from flask import Flask, jsonify, render_template, request, Response
+from flask import Flask, Response, jsonify, render_template, request
 from myExtractLib import json_extract
 from myJSONLib import readJSONfromFile, writeJSONtoFile
 from myLOGLib import LogEvent, events
@@ -170,26 +170,27 @@ def manifest():
 # Aukey webcam maximum resolution : 1920x1080
 # pour connaitre les formats  : v4l2-ctl --list-formats-ext
 
-def gen_frames():  
+
+def gen_frames():
     while True:
         try:
-            success, frame = usb_camera.read()  
+            success, frame = usb_camera.read()
             if not success:
                 print("Can't receive frame. Exiting ...")
                 break
             else:
-                #frame = cv2.resize(frame, (1920, 1080))  # resize the frame
+                # frame = cv2.resize(frame, (1920, 1080))  # resize the frame
                 frame = cv2.resize(frame, (1280, 720))  # resize the frame
-                ret, buffer = cv2.imencode('.jpg', frame)
-                if not ret : 
+                ret, buffer = cv2.imencode(".jpg", frame)
+                if not ret:
                     break
                 frame = buffer.tobytes()
-                yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  
+                yield (
+                    b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n"
+                )
         except KeyboardInterrupt:
             break
     usb_camera.release()
-
 
 
 ####  AFFICHAGES SUR ECRANS LCD ####
@@ -668,7 +669,7 @@ def home():
     """
     Retourne la page principale : capteurs.html
     """
-
+    LogEvent("Connexion établie depuis @IP : " + request.remote_addr)
     return render_template("capteurs.html", **DATA)
 
 
@@ -1014,6 +1015,7 @@ def set_camera_state():
         LogEvent(resp)
         return jsonify(resp)
 
+
 @app.route("/camera", methods=["GET"])
 def camera():
     """
@@ -1023,9 +1025,9 @@ def camera():
     return render_template("camera.html", **DATA)
 
 
-@app.route('/video_feed')
+@app.route("/video_feed")
 def video_feed():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen_frames(), mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
 @app.route("/fan", methods=["POST", "GET"])
@@ -1113,6 +1115,12 @@ def parameters():
     """
 
     return render_template("parameters.html", **DATA)
+
+
+@app.route("/whatsmyip", methods=["GET"])
+def whats_my_ip():
+
+    return "Votre adresse IP est : " + request.remote_addr
 
 
 ####################   fin API   ############################
