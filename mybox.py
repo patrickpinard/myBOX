@@ -2,7 +2,7 @@
 # Date    : 25.3.2024
 # Objet   : MyBox Atelier
 # Source  : mybox.py
-# Version : 8 (camera + whatsmyip)
+# Version : 7.1 (camera + whatsmyip)
 
 #   Clavier MAC :
 #  {} = "alt/option" + "(" ou ")"
@@ -35,8 +35,8 @@ from myLOGLib import LogEvent, events
 ####### Paramètres généreaux de l'APP ###############
 
 APPNAME = "MyBox"
-APPDATE = "24/3/2024"
-APPVERSION = "V7"
+APPDATE = "15/10/2024"
+APPVERSION = "V7.1"
 APPAUTHOR = "Patrick Pinard"
 APPPATH = "/home/pi/mybox/"
 DATAFILENAME = APPPATH + "data.json"
