@@ -16,8 +16,12 @@
             <div class="icon-box bg-danger">
               <ion-icon name="thermometer-outline"></ion-icon>
             </div>
+            
             <div class="in">
-              <strong>Thermostat (à configurer dans paramètres) </strong>
+             <div>
+                <strong>Thermostat</strong>
+                <div style ="font-size:10px;" class="text-secondary">(à configurer dans paramètres)</div>
+              </div>
               {% if THERMOSTAT == true %}
               <div class="form-check form-switch">
                 <input
@@ -94,7 +98,7 @@
   <!-- PRISE & PLANIFICATEUR -->
 
   <div class="section mt-1 mb-1">
-    <div class="section-title">Prise & Planificateur</div>
+    <div class="section-title">Prise 240V & Scheduler</div>
     <div class="card">
       <ul class="listview image-listview transparent flush">
         <li>
@@ -103,7 +107,10 @@
               <ion-icon name="alarm-outline"></ion-icon>
             </div>
             <div class="in">
-              <strong>Planificateur (à configurer dans paramètres) </strong>
+              <div>
+                <strong>Scheduler</strong>
+                <div style ="font-size:10px;" class="text-secondary">(à configurer dans paramètres)</div>
+              </div>
               <div class="form-check form-switch">
                 {% if SCHEDULER == true %}
                 <input
